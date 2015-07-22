@@ -1,0 +1,32 @@
+{
+    "name": "radish/radish",
+    "description": "",
+    "homepage": "http://github.com/tompedals/radish",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Tom Graham",
+            "email": "tom@heyupdate.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "psr/log": "~1.0",
+        "symfony/options-resolver": "~2.7"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*",
+        "mockery/mockery": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Radish\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Radish\\": "tests/"
+        }
+    }
+}
