@@ -83,7 +83,7 @@ class RetryMiddleware implements MiddlewareInterface, ConfigurableInterface
                     $this->logger->info(sprintf('Retrying message in %d milliseconds (attempt %d)', $message->getExpiration(), $attempts));
                 }
             } else if ($options['max_attempts'] > 0 && $this->logger) {
-                $this->logger->error(sprintf('Failed to process message after %d retries', $attempts));
+                $this->logger->critical(sprintf('Failed to process message after %d retries', $attempts));
             }
 
             throw $exception;
