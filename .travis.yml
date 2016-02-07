@@ -12,7 +12,7 @@ matrix:
       env: dependencies=lowest
 
 before_script:
-  - pecl install amqp@1.7.0alpha2
+  - pecl install amqp-1.7.0alpha2
   - composer install
 
   # Run tests on PHP 5.4 with the lowest dependencies
