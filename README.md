@@ -34,4 +34,4 @@ See also the list of [contributors](https://github.com/tompedals/radish/contribu
 
 ### License
 
-Monolog is licensed under the MIT License - see the `LICENSE` file for details
+Radish is licensed under the MIT License - see the `LICENSE` file for details
