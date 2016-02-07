@@ -18,6 +18,10 @@
         </whitelist>
     </filter>
 
+    <listeners>
+        <listener class="\Mockery\Adapter\Phpunit\TestListener" />
+    </listeners>
+
     <php>
         <ini name="date.timezone" value="UTC"/>
     </php>
