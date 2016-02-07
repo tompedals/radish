@@ -8,20 +8,15 @@ php:
 
 matrix:
   include:
-    - php: 5.4
-      env: dependencies=lowest
+    - { php: 5.4, env: COMPOSER_FLAGS='--prefer-lowest --prefer-stable' }
 
 before_script:
   # Install librabbitmq-c
-  - sh provision/install_rabbitmq-c.sh v0.6.0
+  - sh tests/bin/install_rabbitmq-c.sh v0.6.0
   # Install the AMQP dependency (using the alpha release for PHP 7 support)
   - echo "$HOME/rabbitmq-c" | pecl install amqp-1.7.0alpha2
 
-  # Install Composer dependencies
-  - composer install
-
-  # Install lowest possible Composer dependencies
-  - if [ "$dependencies" = "lowest" ]; then composer update --prefer-lowest --prefer-stable -n; fi;
+  - composer install $COMPOSER_FLAGS
 
 script:
   - vendor/bin/phpunit
