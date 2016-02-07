@@ -16,7 +16,8 @@ before_script:
   # Install the AMQP dependency (using the alpha release for PHP 7 support)
   - echo "$HOME/rabbitmq-c" | pecl install amqp-1.7.0alpha2
 
-  - composer install $COMPOSER_FLAGS
+  # Install Composer dependencies
+  - composer update $COMPOSER_FLAGS
 
 script:
   - vendor/bin/phpunit
