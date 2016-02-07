@@ -65,4 +65,28 @@ class ConsumerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue($workerCalled);
     }
+
+    /**
+     * @expectedException RuntimeException
+     * @expectedExceptionMessage Worker not defined for queue
+     */
+    public function testProcessWhenWorkerNotAvailable()
+    {
+        $queueName = 'test_message';
+
+        $queue = Mockery::mock('Radish\Broker\Queue', [
+            'getName' => $queueName
+        ]);
+
+        $this->queues->shouldReceive('get')
+            ->with($queueName)
+            ->andReturn($queue);
+
+        $message = Mockery::mock('Radish\Broker\Message', [
+            'getRoutingKey' => $queueName
+        ]);
+
+        $consumer = new Consumer($this->queues, [], []);
+        $consumer->process($message);
+    }
 }

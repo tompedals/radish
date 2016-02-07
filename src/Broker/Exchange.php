@@ -2,8 +2,6 @@
 
 namespace Radish\Broker;
 
-use AMQPExchange;
-
 class Exchange
 {
     protected $exchange;
@@ -50,9 +48,9 @@ class Exchange
         if ($this->exchange === null) {
             // Lazyily connects and creates the channel
             $this->exchange = $this->connection->createExchange();
-            $this->exchange->setName($this->name);
-            $this->exchange->setType($this->type);
-            $this->exchange->setFlags($this->durable ? AMQP_DURABLE : AMQP_PASSIVE);
+            $this->exchange->setName($this->getName());
+            $this->exchange->setType($this->getType());
+            $this->exchange->setFlags($this->isDurable() ? AMQP_DURABLE : AMQP_PASSIVE);
         }
 
         return $this->exchange;

@@ -35,7 +35,7 @@ class AckMiddleware implements MiddlewareInterface
             if ($this->logger) {
                 $this->logger->warning(sprintf('Exception caught and message #%s from queue "%s" negatively acknowledged', $message->getDeliveryTag(), $queue->getName()), [
                     'middleware' => 'ack',
-                    'exception' => $exception
+                    'exception' => $exception,
                 ]);
             }
 

@@ -27,7 +27,7 @@ class Message
 
     public static function createFromEnvelope(AMQPEnvelope $envelope)
     {
-        $message = new self();
+        $message = new static();
         $message->setAppId($envelope->getAppId());
         $message->setBody($envelope->getBody());
         $message->setContentEncoding($envelope->getContentEncoding());
