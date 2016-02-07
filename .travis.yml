@@ -15,7 +15,7 @@ before_script:
   # Install librabbitmq-c
   - sh provision/install_rabbitmq-c.sh v0.6.0
   # Install the AMQP dependency (using the alpha release for PHP 7 support)
-  - echo "$HOME/rabbitmq-c\n" | pecl install amqp-1.7.0alpha2
+  - echo "$HOME/rabbitmq-c" | pecl install amqp-1.7.0alpha2
 
   # Install Composer dependencies
   - composer install
