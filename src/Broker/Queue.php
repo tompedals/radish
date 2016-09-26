@@ -20,6 +20,11 @@ class Queue implements QueueInterface
      */
     protected $deadLetterExchange;
 
+    /**
+     * @var int
+     */
+    protected $maxPriority;
+
     public function __construct(Connection $connection, $name, $durable = true, array $bindings)
     {
         $this->connection = $connection;
@@ -46,6 +51,16 @@ class Queue implements QueueInterface
     public function setDeadLetterExchange($deadLetterExchange)
     {
         $this->deadLetterExchange = $deadLetterExchange;
+    }
+
+    public function getMaxPriority()
+    {
+        return $this->maxPriority;
+    }
+
+    public function setMaxPriority($maxPriority)
+    {
+        $this->maxPriority = $maxPriority;
     }
 
     public function declareQueue()
@@ -104,6 +119,10 @@ class Queue implements QueueInterface
 
             if ($this->getDeadLetterExchange() !== null) {
                 $this->queue->setArgument('x-dead-letter-exchange', $this->getDeadLetterExchange());
+            }
+
+            if ($this->getMaxPriority() !== null) {
+                $this->queue->setArgument('x-max-priority', $this->getMaxPriority());
             }
         }
 
