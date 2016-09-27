@@ -52,6 +52,11 @@ class QueueRegistry
             $queue->setDeadLetterExchange($config['dead_letter_exchange']);
         }
 
+        // Set max priority
+        if (isset($config['max_priority'])) {
+            $queue->setMaxPriority($config['max_priority']);
+        }
+
         return $queue;
     }
 
