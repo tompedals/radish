@@ -83,6 +83,4 @@ class QueueCollection implements ConsumableInterface
             $queue->cancel();
         }
     }
-
-
 }
