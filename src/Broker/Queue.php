@@ -94,6 +94,20 @@ class Queue implements QueueInterface
         $this->getAMQPQueue()->consume($callback);
     }
 
+    /**
+     * @return Message|null
+     */
+    public function pop()
+    {
+        $envelope = $this->getAMQPQueue()->get();
+
+        if ($envelope instanceof AMQPEnvelope) {
+            return Message::createFromEnvelope($envelope);
+        }
+
+        return null;
+    }
+
     public function cancel()
     {
         $this->getAMQPQueue()->cancel();
