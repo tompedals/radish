@@ -31,7 +31,6 @@ class ConsumerFactory implements ConsumerFactoryInterface
      * @param QueueLoader $queueLoader
      * @param MiddlewareLoader $middlewareLoader
      * @param LoggerInterface|null $logger
-     * @internal param QueueRegistry $queueRegistry
      */
     public function __construct(QueueLoader $queueLoader, MiddlewareLoader $middlewareLoader, LoggerInterface $logger = null)
     {
