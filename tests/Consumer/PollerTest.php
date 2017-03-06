@@ -26,13 +26,13 @@ class PollerTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->message = Mockery::mock(Message::class, [
+        $this->message = Mockery::mock('Radish\Broker\Message', [
             'getRoutingKey' => 'abc'
         ]);
-        $this->queue = Mockery::mock(Queue::class, [
+        $this->queue = Mockery::mock('Radish\Broker\Queue', [
             'getName' => 'abc'
         ]);
-        $this->queues = Mockery::mock(QueueCollection::class, [
+        $this->queues = Mockery::mock('Radish\Broker\QueueCollection', [
             'consume' => null,
             'pop' => $this->message,
             'get' => $this->queue,

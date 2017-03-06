@@ -24,13 +24,13 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $this->collection = new QueueCollection();
-        $this->queue1 = Mockery::mock(Queue::class, [
+        $this->queue1 = Mockery::mock('Radish\Broker\Queue', [
             'getName' => 'a',
-            'pop' => Mockery::mock(Message::class)
+            'pop' => Mockery::mock('Radish\Broker\Message')
         ]);
-        $this->queue2 = Mockery::mock(Queue::class, [
+        $this->queue2 = Mockery::mock('Radish\Broker\Queue', [
             'getName' => 'b',
-            'pop' => Mockery::mock(Message::class)
+            'pop' => Mockery::mock('Radish\Broker\Message')
         ]);
     }
 
@@ -41,14 +41,14 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
 
         $this->queue1->shouldReceive('pop')
             ->once()
-            ->andReturn(Mockery::mock(Message::class));
+            ->andReturn(Mockery::mock('Radish\Broker\Message'));
 
         $this->queue2->shouldReceive('pop')
             ->never();
 
         $message = $this->collection->pop();
 
-        static::assertInstanceOf(Message::class, $message);
+        static::assertInstanceOf('Radish\Broker\Message', $message);
     }
 
     public function testPopPopsEachQueueInOrder()
@@ -56,8 +56,8 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
         $this->collection->add($this->queue1);
         $this->collection->add($this->queue2);
 
-        $message1 = Mockery::mock(Message::class);
-        $message2 = Mockery::mock(Message::class);
+        $message1 = Mockery::mock('Radish\Broker\Message');
+        $message2 = Mockery::mock('Radish\Broker\Message');
 
         $this->queue1->shouldReceive('pop')
             ->once()
@@ -75,7 +75,7 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
     {
         $this->collection->add($this->queue1);
 
-        $message1 = Mockery::mock(Message::class);
+        $message1 = Mockery::mock('Radish\Broker\Message');
 
         $this->queue1->shouldReceive('pop')
             ->twice()

@@ -19,8 +19,8 @@ class QueueLoaderTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->queueRegistry = Mockery::mock(QueueRegistry::class, [
-            'get' => Mockery::mock(Queue::class, [
+        $this->queueRegistry = Mockery::mock('Radish\Broker\QueueRegistry', [
+            'get' => Mockery::mock('Radish\Broker\Queue', [
                 'getName' => 'a',
             ]),
         ]);
@@ -32,14 +32,14 @@ class QueueLoaderTest extends PHPUnit_Framework_TestCase
         $this->queueRegistry->shouldReceive('get')
             ->with('a')
             ->times(1)
-            ->andReturn(Mockery::mock(Queue::class, [
+            ->andReturn(Mockery::mock('Radish\Broker\Queue', [
                 'getName' => 'a',
             ]));
 
         $this->queueRegistry->shouldReceive('get')
             ->with('b')
             ->times(1)
-            ->andReturn(Mockery::mock(Queue::class, [
+            ->andReturn(Mockery::mock('Radish\Broker\Queue', [
                 'getName' => 'a',
             ]));
 
@@ -50,6 +50,6 @@ class QueueLoaderTest extends PHPUnit_Framework_TestCase
     {
         $collection = $this->loader->load(['a']);
 
-        static::assertInstanceOf(QueueCollection::class, $collection);
+        static::assertInstanceOf('Radish\Broker\QueueCollection', $collection);
     }
 }

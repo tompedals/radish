@@ -76,6 +76,6 @@ class QueueTest extends PHPUnit_Framework_TestCase
 
         $message = $this->queue->pop();
 
-        static::assertInstanceOf(Message::class, $message);
+        static::assertInstanceOf('Radish\Broker\Message', $message);
     }
 }

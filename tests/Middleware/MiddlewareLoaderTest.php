@@ -19,7 +19,7 @@ class MiddlewareLoaderTest extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->middlewareRegistry = Mockery::mock(MiddlewareRegistry::class);
+        $this->middlewareRegistry = Mockery::mock('Radish\Middleware\MiddlewareRegistry');
         $this->loader = new MiddlewareLoader($this->middlewareRegistry);
     }
 
@@ -31,7 +31,7 @@ class MiddlewareLoaderTest extends PHPUnit_Framework_TestCase
             ]
         ];
 
-        $middleware = Mockery::mock(ConfigurableInterface::class);
+        $middleware = Mockery::mock('Radish\Middleware\ConfigurableInterface');
 
         $middleware->shouldReceive('configureOptions')
             ->andReturnUsing(function ($resolver) {
@@ -59,7 +59,7 @@ class MiddlewareLoaderTest extends PHPUnit_Framework_TestCase
             'max_messages' => true
         ];
 
-        $middleware = Mockery::mock(ConfigurableInterface::class);
+        $middleware = Mockery::mock('Radish\Middleware\ConfigurableInterface');
 
         $middleware->shouldReceive('configureOptions')
             ->andReturnUsing(function ($resolver) {
