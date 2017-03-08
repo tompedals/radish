@@ -2,6 +2,7 @@
 
 namespace Radish\Broker;
 
+use AMQPEnvelope;
 use AMQPQueue;
 use Mockery;
 use Mockery\Mock;
@@ -56,5 +57,25 @@ class QueueTest extends PHPUnit_Framework_TestCase
             ->never();
 
         $this->queue->declareQueue();
+    }
+
+    public function testPopReturnsNullWhenNoMessages()
+    {
+        $this->amqpQueue->shouldReceive('get')
+            ->andReturn(false)
+            ->once();
+
+        static::assertNull($this->queue->pop());
+    }
+
+    public function testPopReturnsMessageWhenMessageInQueue()
+    {
+        $this->amqpQueue->shouldReceive('get')
+            ->andReturn(Mockery::mock(new AMQPEnvelope()))
+            ->once();
+
+        $message = $this->queue->pop();
+
+        static::assertInstanceOf('Radish\Broker\Message', $message);
     }
 }

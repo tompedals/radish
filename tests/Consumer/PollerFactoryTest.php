@@ -7,7 +7,7 @@ use Mockery\Mock;
 use Radish\Broker\QueueLoader;
 use Radish\Middleware\MiddlewareLoader;
 
-class ConsumerFactoryTest extends \PHPUnit_Framework_TestCase
+class PollerFactoryTest extends \PHPUnit_Framework_TestCase
 {
     /**
      * @var Mock|QueueLoader
@@ -18,7 +18,7 @@ class ConsumerFactoryTest extends \PHPUnit_Framework_TestCase
      */
     public $middlewareLoader;
     /**
-     * @var ConsumerFactory
+     * @var PollerFactory
      */
     public $factory;
 
@@ -27,7 +27,7 @@ class ConsumerFactoryTest extends \PHPUnit_Framework_TestCase
         $this->queueLoader = Mockery::mock('Radish\Broker\QueueLoader');
         $this->middlewareLoader = Mockery::mock('Radish\Middleware\MiddlewareLoader');
 
-        $this->factory = new ConsumerFactory($this->queueLoader, $this->middlewareLoader);
+        $this->factory = new PollerFactory($this->queueLoader, $this->middlewareLoader);
     }
 
     public function testCreate()
@@ -45,8 +45,8 @@ class ConsumerFactoryTest extends \PHPUnit_Framework_TestCase
             ->once()
             ->andReturn([Mockery::mock('Radish\Middleware\MiddlewareInterface')]);
 
-        $consumer = $this->factory->create($queueNames, $middlewareOptions, []);
+        $consumer = $this->factory->create($queueNames, $middlewareOptions, [], 10);
 
-        $this->assertInstanceOf('Radish\Consumer\Consumer', $consumer);
+        $this->assertInstanceOf('Radish\Consumer\Poller', $consumer);
     }
 }

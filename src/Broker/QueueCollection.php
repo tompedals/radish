@@ -4,7 +4,15 @@ namespace Radish\Broker;
 
 class QueueCollection implements ConsumableInterface
 {
+    /**
+     * @var Queue[]
+     */
     protected $queues;
+
+    /**
+     * @var int
+     */
+    private $queueCounter = 0;
 
     public function __construct(array $queues = [])
     {
@@ -45,6 +53,28 @@ class QueueCollection implements ConsumableInterface
 
         // Cancel when finished consuming
         $this->cancel();
+    }
+
+    /**
+     * @return Message|null
+     */
+    public function pop()
+    {
+        $keys = array_keys($this->queues);
+        if (!isset($keys[$this->queueCounter])) {
+            $this->queueCounter = 0;
+        }
+
+        $queue = $this->queues[$keys[$this->queueCounter]];
+
+        $message = $queue->pop();
+        $this->queueCounter++;
+
+        if ($message !== null) {
+            return $message;
+        }
+
+        return null;
     }
 
     public function cancel()

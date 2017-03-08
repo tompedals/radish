@@ -2,30 +2,24 @@
 
 namespace Radish\Consumer;
 
-use Radish\Broker\QueueCollection;
-use Radish\Broker\QueueLoader;
-use Radish\Broker\QueueRegistry;
-use Radish\Middleware\ConfigurableInterface;
-use Radish\Middleware\MiddlewareLoader;
-use Radish\Middleware\MiddlewareRegistry;
 use Psr\Log\LoggerInterface;
-use Radish\Poller\Poller;
-use Symfony\Component\OptionsResolver\OptionsResolver;
+use Radish\Broker\QueueLoader;
+use Radish\Middleware\MiddlewareLoader;
 
-class ConsumerFactory implements ConsumerFactoryInterface
+class PollerFactory
 {
     /**
-     * @var LoggerInterface|null
+     * @var QueueLoader
      */
-    protected $logger;
+    protected $queueLoader;
     /**
      * @var MiddlewareLoader
      */
     private $middlewareLoader;
     /**
-     * @var QueueLoader
+     * @var LoggerInterface|null
      */
-    private $queueLoader;
+    protected $logger;
 
     /**
      * @param QueueLoader $queueLoader
@@ -43,14 +37,16 @@ class ConsumerFactory implements ConsumerFactoryInterface
      * @param array $queueNames
      * @param array $middlewareOptions
      * @param array $workers
-     * @return Consumer
+     * @param int $interval
+     * @return Poller
      */
-    public function create(array $queueNames, array $middlewareOptions, array $workers)
+    public function create(array $queueNames, array $middlewareOptions, array $workers, $interval)
     {
-        return new Consumer(
+        return new Poller(
             $this->queueLoader->load($queueNames),
             $this->middlewareLoader->load($middlewareOptions),
             $workers,
+            $interval,
             $this->logger
         );
     }
