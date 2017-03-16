@@ -61,11 +61,11 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
 
         $this->queue1->shouldReceive('pop')
             ->once()
-            ->andReturn($message1, null);
+            ->andReturn($message1);
 
         $this->queue2->shouldReceive('pop')
             ->once()
-            ->andReturn(null, $message2);
+            ->andReturn($message2);
 
         static::assertSame($message1, $this->collection->pop());
         static::assertSame($message2, $this->collection->pop());
