@@ -61,11 +61,11 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
 
         $this->queue1->shouldReceive('pop')
             ->once()
-            ->andReturn($message1);
+            ->andReturn($message1, null);
 
         $this->queue2->shouldReceive('pop')
             ->once()
-            ->andReturn($message2);
+            ->andReturn(null, $message2);
 
         static::assertSame($message1, $this->collection->pop());
         static::assertSame($message2, $this->collection->pop());
@@ -78,7 +78,7 @@ class QueueCollectionTest extends PHPUnit_Framework_TestCase
         $message1 = Mockery::mock('Radish\Broker\Message');
 
         $this->queue1->shouldReceive('pop')
-            ->twice()
+            ->once()
             ->andReturn($message1, null);
 
         static::assertSame($message1, $this->collection->pop());

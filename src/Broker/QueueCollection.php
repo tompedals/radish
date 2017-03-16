@@ -8,11 +8,14 @@ class QueueCollection implements ConsumableInterface
      * @var Queue[]
      */
     protected $queues;
-
     /**
      * @var int
      */
     private $queueCounter = 0;
+    /**
+     * @var int
+     */
+    private $processedMessages = 0;
 
     public function __construct(array $queues = [])
     {
@@ -56,22 +59,35 @@ class QueueCollection implements ConsumableInterface
     }
 
     /**
+     * Returns the next message from each queue until all are empty
+     *
      * @return Message|null
      */
     public function pop()
     {
         $keys = array_keys($this->queues);
-        if (!isset($keys[$this->queueCounter])) {
-            $this->queueCounter = 0;
-        }
 
-        $queue = $this->queues[$keys[$this->queueCounter]];
+        for ($this->queueCounter; isset($keys[$this->queueCounter]); $this->queueCounter++) {
+            $queue = $this->queues[$keys[$this->queueCounter]];
 
-        $message = $queue->pop();
-        $this->queueCounter++;
+            $message = $queue->pop();
 
-        if ($message !== null) {
-            return $message;
+            if ($message !== null) {
+                $this->queueCounter++;
+                $this->processedMessages++;
+                return $message;
+            }
+
+            // After the last queue has been popped
+            if ((count($this->queues) -1) === $this->queueCounter) {
+                $this->queueCounter = 0;
+
+                if ($this->processedMessages === 0) {
+                    return null;
+                }
+
+                $this->processedMessages = 0;
+            }
         }
 
         return null;
