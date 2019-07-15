@@ -100,7 +100,7 @@ class NonBlockingRetryMiddleware implements MiddlewareInterface, ConfigurableInt
      * @param int $attempts
      * @return int The number of seconds to wait until next attempt
      */
-    private function getBackoffPeriod(int $attempts)
+    private function getBackoffPeriod($attempts)
     {
         return (pow($attempts, 4) + 15 + (rand(1, 30) * ($attempts + 1)));
     }
